@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .pullDown,
+        .pullUp {
+            height: 50px;
+            width: 100%;
+            line-height: 50px;
+            text-align: center;
+            background: #ccc;
+            position: absolute;
+            left: 0;
+        }
+        
+        .pullUp {
+            bottom: -50px;
+        }
+        
+        .pullDown {
+            top: -50px;
+        }
+        
+        .list li {
+            list-style: none;
+            line-height: 60px;
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid #999;
+        }
+    </style>
+</head>
+<script src='zepto.js'></script>
+<script src='better-scroll.js'></script>
+
+
+<body>
+    <div class="wrapper">
+        <div>
+            <div class="pullDown">下拉刷新</div>
+            <ul class="list">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+                <li>11</li>
+                <li>12</li>
+                <li>13</li>
+                <li>14</li>
+                <li>15</li>
+            </ul>
+            <div class="pullUp">上拉刷新</div>
+        </div>
+    </div>
+    <script>
+        var BScroll = new BScroll('.wrapper', {
+            probeType: 2
+        });
+        BScroll.on('scroll', function() {
+            // console.log(this.y, this.maxScrollY)
+            if (this.y < this.maxScrollY - 50) {
+                $('.pullUp').html('释放刷新更多...').addClass('flig')
+            } else {
+                $('.pullUp').html('上拉刷新').removeClass('flig')
+            }
+            if (this.y > 50) {
+                $('.pullDown').html('释放刷新更多...').addClass('flig');
+            } else {
+                $('.pullDown').html('下拉刷新').removeClass('flig');
+            }
+        })
+        BScroll.on('scrollEnd', function() {
+            if ($('.pullUp').hasClass('flig')) {
+                //上拉
+                $('.pullUp').html('上拉刷新').removeClass('flig');
+                var html = '';
+                for (var i = 0; i < 10; i++) {
+                    html += `<li>${i+1}</li>`;
+                }
+                var list = document.querySelector('.list');
+                list.innerHTML += html;
+            } else if ($('.pullDown').hasClass('flig')) {
+                //下拉
+                $('.pullDown').html('下拉刷新').removeClass('flig');
+                window.location.reload();
+            }
+        })
+    </script>
+</body>
+
+</html>

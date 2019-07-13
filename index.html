@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .pink {
+            width: 600px;
+            height: 60px;
+            background: red;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='550' style='background:#eee'></canvas>
+    <button>一人座</button> <button>两人座</button> <button>三人座</button>
+    <div class="pink"></div>
+</body>
+<script>
+    var ctx = mycanvas.getContext('2d');
+    var offsetX = offsetY = 30;
+    //改变原点
+    ctx.translate(50, 450);
+    //所有座位
+    for (var j = 0; j < 14; j++) {
+        for (var i = 0; i < 14; i++) {
+            drawLine(i * offsetX, -j * offsetY);
+        }
+    }
+    //最佳观影区域
+    ctx.beginPath();
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(115, -245, 180, 150);
+
+    //模拟以选座位数据
+    var data = [{
+            clo: '6',
+            row: '3'
+        }, {
+            clo: '9',
+            row: '3'
+        }, {
+            clo: '10',
+            row: '3'
+        }, {
+            clo: '6',
+            row: '4'
+        }, {
+            clo: '7',
+            row: '4'
+        }, {
+            clo: '4',
+            row: '8'
+        }, {
+            clo: '5',
+            row: '8'
+        }, {
+            clo: '12',
+            row: '13'
+        }, {
+            clo: '13',
+            row: '13'
+        }]
+        //已选座位
+    data.map(function(v, i) {
+        ctx.beginPath();
+        ctx.fillStyle = 'pink';
+        ctx.fillRect(v.clo * offsetX, -v.row * offsetY, 20, 20);
+    })
+
+    //每一个座位
+    function drawLine(x, y) {
+        ctx.beginPath();
+        ctx.strokeRect(x, y, 20, 20);
+        ctx.stroke()
+    }
+    //随机获取座位号
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    var btns = document.querySelectorAll('button');
+    var arr = [];
+    btns[0].onclick = function() {
+        arr = [];
+        change();
+        rendent(arr)
+    }
+    btns[1].onclick = function() {
+        arr = [];
+        change();
+        change();
+        rendent(arr)
+    }
+    btns[2].onclick = function() {
+        arr = [];
+        change();
+        change();
+        change();
+        rendent(arr)
+    }
+
+    function change() {
+        var ang = {
+            clo: getRandom(0, 13),
+            row: getRandom(0, 13)
+        }
+        var index = data.findIndex(function(item) {
+            return item == ang;
+        })
+        if (index == -1) {
+            arr.push(ang)
+        }
+        // data.map(function(v, i) {
+        //     if (ang != v) {
+        //         ang = ang
+        //     }
+        // });
+        // arr.push(ang)
+    }
+
+    mycanvas.onmousedown = function(e) {
+            arr = [];
+            console.log(e.offsetY - 100)
+            arr.push({
+                clo: Math.round((e.offsetX - 50) / 30),
+                row: -Math.round((e.offsetY - 450) / 30)
+            })
+            console.log(arr)
+            rendent(arr)
+        }
+        //绿色渲染
+    var pink = document.querySelector('.pink');
+
+    function rendent(arr) {
+        arr.map(function(v, i) {
+            ctx.beginPath();
+            ctx.fillStyle = 'green';
+            ctx.fillRect(offsetX * v.clo, -offsetY * v.row, 20, 20);
+        })
+        pink.style.display = 'block';
+        pink.innerHTML = `${46.5*arr.length}确认选座`;
+        pink.onclick = function() {
+            var url = mycanvas.toDataURL();
+            var img = new Image();
+            img.src = url;
+            console.log(img);
+            alert('保存成功');
+            img.onload = function() {
+                document.body.append(img);
+            }
+        }
+
+    };
+</script>
+
+</html>
