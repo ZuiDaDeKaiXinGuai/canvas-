@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycool' width='600' height='600' style='border:1px solid #ccc;background:#ccc;'></canvas>
+    <script>
+        var mycanvas = document.querySelector('#mycool');
+        var ctx = mycanvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.arc(300, 300, 300, 0.5 * Math.PI, 1.5 * Math.PI);
+        ctx.strokeStyle = '#fff';
+        ctx.fillStyle = 'black';
+        ctx.fill()
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(300, 300, 300, 1.5 * Math.PI, 0.5 * Math.PI);
+        ctx.fillStyle = '#fff';
+        ctx.fill()
+        ctx.stroke();
+        ctx.closePath();
+
+
+        ctx.beginPath();
+        ctx.arc(300, 150, 150, 0.5 * Math.PI, 1.5 * Math.PI);
+        ctx.fillStyle = '#fff'
+        ctx.fill()
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(300, 450, 150, 1.5 * Math.PI, 0.5 * Math.PI);
+        ctx.fillStyle = 'black'
+        ctx.fill()
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(300, 150, 75, 0 * Math.PI, 2 * Math.PI);
+        ctx.fillStyle = 'black'
+        ctx.fill()
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(300, 450, 75, 0 * Math.PI, 2 * Math.PI);
+        ctx.fillStyle = '#fff'
+        ctx.fill()
+        ctx.stroke();
+        ctx.closePath();
+    </script>
+</body>
+
+</html>

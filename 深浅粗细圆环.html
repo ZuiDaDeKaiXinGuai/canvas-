@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600' style='border:1px solid #ccc;background:#999'></canvas>
+</body>
+<script>
+    var ctx = mycanvas.getContext('2d');
+
+    var arr = {
+        type: ['视频广告', '联盟广告', '邮件营销', '直接访问', '搜索引擎'],
+        ang: [50, 65, 75, 80, 90],
+        color: ['#671D1B', '#8E2623', '#AF2F2B', '#C43530', '#D76662']
+    }
+    var start = end = 0;
+    var deg = Math.PI / 180;
+    arr.ang.map(function(v, i) {
+        end = start + v;
+        ctx.beginPath();
+        ctx.arc(300, 300, 100 + i * 30, start * deg, end * deg);
+        ctx.fillStyle = arr.color[i];
+        ctx.lineTo(300, 300);
+        ctx.fill();
+        var c_deg = start + v / 2;
+        var x = Math.cos(c_deg * deg) * (100 + i * 30);
+        var y = Math.sin(c_deg * deg) * (100 + i * 30);
+        var x1 = Math.cos(c_deg * deg) * (130 + i * 30);
+        var y1 = Math.sin(c_deg * deg) * (130 + i * 30);
+        if (x1 > 0) {
+            var x3 = x1 + 80;
+
+        } else {
+            var x3 = x1 - 80;
+        }
+        ctx.beginPath();
+        ctx.moveTo(x + 300, y + 300);
+        ctx.lineTo(x1 + 300, y1 + 300);
+        ctx.lineTo(x3 + 300, y1 + 300);
+        ctx.fillStyle = '#676C71';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle'
+        ctx.fillText(arr.type[i], x3 + 300, y1 + 290);
+        ctx.strokeStyle = '#676C71';
+        ctx.stroke();
+
+        start = end;
+    })
+</script>
+
+</html>

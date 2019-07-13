@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='800' height='800' style='border:1px solid #eee;'></canvas>
+    <script>
+        var ctx = mycanvas.getContext('2d');
+        var offsetX = offsetY = 100;
+        var arr = [];
+        var color = `rgb(${getRandom(0,255)},${getRandom(0,255)},${getRandom(0,255)})`
+        ctx.translate(100, 600);
+
+        ctx.beginPath();
+        ctx.lineTo(0, -520);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(520, 0);
+        ctx.stroke();
+        ctx.closePath();
+        //上箭头
+        ctx.beginPath();
+        ctx.moveTo(-10, -510);
+        ctx.lineTo(0, -520);
+        ctx.lineTo(10, -510);
+        ctx.stroke();
+        ctx.closePath();
+        //右箭头
+        ctx.beginPath();
+        ctx.moveTo(510, -10);
+        ctx.lineTo(520, 0);
+        ctx.lineTo(510, 10);
+        ctx.stroke();
+        ctx.closePath();
+
+        for (var i = 0; i < 6; i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * offsetX, 0);
+            ctx.lineTo(i * offsetX, 10);
+            ctx.stroke();
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.fillText(i + 1, i * offsetX, 20);
+
+            ctx.closePath();
+            arr.push(getRandom(30, 80))
+
+        }
+        for (var i = 0; i < 6; i++) {
+            ctx.beginPath();
+            ctx.moveTo(0, -i * offsetY);
+            ctx.lineTo(-10, -i * offsetY);
+            ctx.stroke();
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.fillText(i * 10 + 30, -20, -i * offsetY);
+            ctx.closePath();
+        }
+
+
+
+        ctx.beginPath();
+        arr.map(function(v, i) {
+            if (i == 0) {
+                ctx.moveTo(0, -offsetY / 10 * (v - 30));
+            } else {
+                ctx.lineTo(i * offsetX, -offsetY / 10 * (v - 30));
+            }
+        })
+        ctx.strokeStyle = color;
+        //  ctx.fillStyle = '#fff'
+        ctx.stroke();
+        ctx.closePath();
+
+        arr.map(function(v, i) {
+            ctx.beginPath();
+            ctx.arc(i * offsetX, -offsetY / 10 * (v - 30), 4, 0, 2 * Math.PI);
+
+            ctx.arc(i * offsetX, -offsetY / 10 * (v - 30), 3, 0, 2 * Math.PI);
+            ctx.strokeStyle = color;
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+        })
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='700' height='700' border='1px solid #ccc'></canvas>
+</body>
+<script>
+    var ctx = mycanvas.getContext('2d');
+    ctx.translate(100, 600);
+    var arr = {
+        '周一': [{
+            num: 400,
+            color: '#C23531'
+        }, {
+            num: 200,
+            color: '#2F4554'
+        }, {
+            num: 280,
+            color: '#61A0A8'
+        }, {
+            num: 300,
+            color: '#D48265'
+        }, {
+            num: 400,
+            color: '#91C7AE'
+        }],
+        '周二': [{
+            num: 400,
+            color: '#C23531'
+        }, {
+            num: 200,
+            color: '#2F4554'
+        }, {
+            num: 500,
+            color: '#61A0A8'
+        }, {
+            num: 600,
+            color: '#D48265'
+        }, {
+            num: 900,
+            color: '#91C7AE'
+        }],
+        '周三': [{
+            num: 400,
+            color: '#C23531'
+        }, {
+            num: 200,
+            color: '#2F4554'
+        }, {
+            num: 500,
+            color: '#61A0A8'
+        }, {
+            num: 600,
+            color: '#D48265'
+        }, {
+            num: 900,
+            color: '#91C7AE'
+        }],
+        '周四': [{
+            num: 400,
+            color: '#C23531'
+        }, {
+            num: 200,
+            color: '#2F4554'
+        }, {
+            num: 500,
+            color: '#61A0A8'
+        }, {
+            num: 600,
+            color: '#D48265'
+        }, {
+            num: 900,
+            color: '#91C7AE'
+        }],
+
+        '周六': [{
+            num: 400,
+            color: '#C23531'
+        }, {
+            num: 200,
+            color: '#2F4554'
+        }, {
+            num: 500,
+            color: '#61A0A8'
+        }, {
+            num: 600,
+            color: '#D48265'
+        }, {
+            num: 900,
+            color: '#91C7AE'
+        }],
+        '周日': [{
+            num: 400,
+            color: '#C23531'
+        }, {
+            num: 200,
+            color: '#2F4554'
+        }, {
+            num: 500,
+            color: '#61A0A8'
+        }, {
+            num: 600,
+            color: '#D48265'
+        }, {
+            num: 900,
+            color: '#91C7AE'
+        }]
+    }
+    line(0, 0, 500, 0);
+    line(0, 0, 0, -700);
+    var offsetX = offsetY = 100;
+    for (var i = 0; i < 6; i++) {
+        line(i * offsetX, 0, i * offsetX, 10);
+        line(i * offsetX, 0, i * offsetX, -500);
+        line(0, -i * offsetY, -10, -i * offsetY);
+    }
+
+    function line(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+    }
+    var keys = Object.keys(arr);
+    for (var i = 0; i < keys.length; i++) {
+        ctx.beginPath();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(keys[i], -30, -i * offsetY - 50);
+        ctx.fillText(i * 500, i * offsetX, 20)
+        ctx.closePath()
+    }
+    var bill = 100 / 500;
+    var start = end = 0;
+    for (var i = 0; i < arr.length; i++) {
+        arr[i].map(function(v, i) {
+            end = start + v.num * bill;
+            rect(start, -10, v.num * bill, -80, v.color);
+            start = end;
+            // ctx.beginPath();
+            // ctx.textAlign = 'center';
+            // ctx.textBaseline = 'middle';
+
+            // ctx.fillText(v.num, start + v.num * bill / 2, -40)
+            // ctx.closePath()
+        })
+    }
+    // rect(0, -10, 400 * bill, -80, 'red');
+    // rect(400 * bill, -10, 200 * bill, -80, 'blue');
+
+    function rect(x, y, w, h, color) {
+        ctx.beginPath();
+        ctx.rect(x, y, w, h);
+        ctx.fillStyle = color;
+        ctx.fill()
+        ctx.closePath();
+    }
+</script>
+
+</html>

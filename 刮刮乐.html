@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .box {
+            position: relative;
+        }
+        
+        #mycanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" style='background:pink;width:150px;height:300px;'></div>
+    <canvas id='mycanvas' width='150' height='300' style='border:1px solid #ccc'></canvas>
+    <script>
+        var box = document.querySelector('.box');
+        var ctx = mycanvas.getContext('2d')
+        var arr = ['一等奖', '二等奖', '三等奖', '谢谢参与'];
+        box.innerHTML = arr[getRandom(0, arr.length - 1)];
+        box.style.textAlign = 'center';
+        box.style.lineHeight = '300px';
+        ctx.beginPath();
+        ctx.fillStyle = '#ccc';
+        ctx.fillRect(0, 0, 150, 300);
+        ctx.closePath();
+        mycanvas.onmousedown = function() {
+            mycanvas.onmousemove = function(e) {
+                ctx.beginPath()
+                ctx.clearRect(e.offsetX, e.offsetY, 10, 10);
+
+            }
+        }
+        mycanvas.onmouseup = function() {
+            mycanvas.onmousemove = null;
+            ctx.closePath()
+        }
+
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * max - min + 1) + min;
+        }
+    </script>
+</body>
+
+</html>

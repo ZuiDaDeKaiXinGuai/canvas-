@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600' style='border:1px solid #ccc'></canvas>
+    <script>
+        var ctx = mycanvas.getContext('2d');
+        var offsetX = offsetY = 50;
+        //改变原点
+        ctx.translate(250, 500);
+        //纵坐标
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -350);
+        ctx.stroke();
+        ctx.closePath();
+        //下划线
+        ctx.beginPath();
+        ctx.moveTo(-150, 0);
+        ctx.lineTo(250, 0);
+        ctx.stroke();
+        ctx.closePath();
+
+
+        for (var i = 0; i < 6; i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * offsetX, 0);
+            ctx.lineTo(i * offsetX, 10);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.strokeStyle = '#000';
+            ctx.fillText(i * offsetX * 2, i * offsetX, 20);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();
+            ctx.moveTo(i * offsetX, 0);
+            ctx.lineTo(i * offsetX, -350)
+            ctx.strokeStyle = '#ccc';
+            ctx.stroke()
+
+        }
+        for (var i = 1; i < 4; i++) {
+            ctx.beginPath();
+            ctx.moveTo(-i * offsetX, 0);
+            ctx.lineTo(-i * offsetX, 10);
+            ctx.fillText(-i * offsetX * 2, -i * offsetX, 20);
+            ctx.strokeStyle = '#000';
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(-i * offsetX, 0);
+            ctx.lineTo(-i * offsetX, -350)
+            ctx.strokeStyle = '#ccc';
+            ctx.stroke()
+        }
+
+        var arr = {
+            '周一': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            },
+            '周二': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            },
+            '周三': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            },
+            '周四': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            },
+            '周五': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            },
+            '周六': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            },
+            '周日': {
+                red: getRandom(150, 250),
+                blue: getRandom(200, 450),
+                green: -getRandom(150, 240)
+            }
+        }
+
+        var color = [];
+        for (var i = 0; i < 3; i++) {
+            color.push(`rgb(${getRandom(0, 255)}, ${getRandom(0, 255)}, ${getRandom(0, 255)})`)
+        }
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        var keys = Object.keys(arr);
+
+        for (var i = 0; i < keys.length; i++) {
+            ctx.beginPath();
+            ctx.fillStyle = '#000'
+            ctx.fillText(keys[i], -170, -i * offsetY - 25);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = color[0];
+            ctx.fillRect(0, -i * offsetX - 40, arr[keys[i]].red / 2, 15);
+            ctx.fillStyle = '#fff'
+            ctx.fillText(arr[keys[i]].red, arr[keys[i]].red / 4, -i * offsetX - 32);
+            ctx.fillStyle = color[1];
+            ctx.fillRect(0, -i * offsetX - 20, arr[keys[i]].blue / 2, 15);
+            ctx.fillStyle = '#fff'
+            ctx.fillText(arr[keys[i]].blue, arr[keys[i]].blue / 4, -i * offsetX - 12);
+            ctx.fillStyle = color[2];
+            ctx.fillRect(0, -i * offsetX - 20, arr[keys[i]].green / 2, 15);
+            ctx.fillStyle = color[2]
+            ctx.fillText(arr[keys[i]].green, arr[keys[i]].green / 2 - 15, -i * offsetX - 12);
+        }
+    </script>
+</body>
+
+</html>

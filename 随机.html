@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600' style='border:1px solid #ccc;'></canvas>
+    <script>
+        var ctx = mycanvas.getContext('2d');
+        ctx.translate(300, 300);
+        var len = getRandom(5, 8);
+        var arr = [];
+        for (var i = 0; i < len; i++) {
+            arr.push({
+                num: getRandom(30, 60),
+                color: `rgb(${getRandom(0,255)},${getRandom(0,255)},${getRandom(0,255)})`
+            })
+        }
+        var sum = 0;
+        var start = end = 0;
+        var deg = Math.PI / 180;
+        sum = arr.map(function(v, i) {
+            return v.num;
+        }).reduce(function(a, b) {
+            return a + b;
+        })
+        arr.map(function(v, i) {
+
+            ctx.beginPath();
+            end = start + v.num / sum * 360;
+            ctx.arc(0, 0, 200, start * deg, end * deg);
+            ctx.lineTo(0, 0);
+            ctx.fillStyle = v.color;
+            ctx.fill();
+
+            var c_deg = start + v.num / sum * 360 / 2;
+            var x = Math.cos(c_deg * deg) * 200;
+            var y = Math.sin(c_deg * deg) * 200;
+            var x1 = Math.cos(c_deg * deg) * 220;
+            var y1 = Math.sin(c_deg * deg) * 220;
+            if (x1 > 0) {
+                var x3 = x1 + 80;
+                var x4 = x1 + 40;
+            } else {
+                var x3 = x1 - 80;
+                var x4 = x1 - 40;
+            }
+            ctx.beginPath();
+
+            ctx.moveTo(x, y);
+            ctx.lineTo(x1, y1);
+            ctx.lineTo(x3, y1);
+
+            ctx.strokeStyle = v.color;
+            ctx.stroke();
+            ctx.closePath();
+            start = end;
+
+        })
+        ctx.beginPath();
+        ctx.arc(0, 0, 160, 0, 2 * Math.PI);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.closePath()
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+    </script>
+</body>
+
+</html>

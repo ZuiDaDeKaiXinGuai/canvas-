@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600' style='border:1px solid #ccc'></canvas>
+    <script>
+        var ctx = mycanvas.getContext('2d');
+        arr = [{
+            ang: 40,
+            color: 'red',
+            class: '1610A'
+        }, {
+            ang: 60,
+            color: 'yellow',
+            class: '1610B'
+
+        }, {
+            ang: 80,
+            color: 'green',
+            class: '1609A'
+
+        }, {
+            ang: 120,
+            color: 'blue',
+            class: '1618A'
+
+        }, {
+            ang: 60,
+            color: 'orange',
+            class: '1611A'
+
+        }];
+        var start = end = 0;
+        var deg = Math.PI / 180;
+        ctx.translate(300, 300)
+        arr.map(function(v, i) {
+            end = start + v.ang;
+            ctx.beginPath();
+            ctx.fillStyle = v.color;
+            ctx.arc(0, 0, 200, start * deg, end * deg);
+            ctx.lineTo(0, 0);
+            ctx.fill();
+            ctx.closePath();
+
+            var c_deg = start + v.ang / 2;
+            var x1 = Math.cos(c_deg * deg) * 200;
+            var y1 = Math.sin(c_deg * deg) * 200;
+            var x2 = Math.cos(c_deg * deg) * 220;
+            var y2 = Math.sin(c_deg * deg) * 220;
+            if (x2 > 0) {
+                var x3 = x2 + 80;
+                var x4 = x2 + 40;
+            } else {
+                var x3 = x2 - 80;
+                var x4 = x2 - 40;
+
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x3, y2);
+            ctx.strokeStyle = v.color;
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();
+            ctx.arc(x3, y2, 5, 0, 360);
+            ctx.fillStyle = v.color;
+            ctx.fill();
+
+            ctx.fillStyle = v.color;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle'
+            ctx.fillText(v.class, x4, y2 - 10)
+
+
+            start = end;
+        })
+    </script>
+</body>
+
+</html>

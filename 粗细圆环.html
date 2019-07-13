@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600'></canvas>
+    <script>
+        var ctx = mycanvas.getContext('2d');
+        ctx.translate(300, 300);
+        var arr = [{
+            num: 200,
+            ang: 200,
+            color: '#10C58F'
+        }, {
+            num: 185,
+            ang: 100,
+            color: '#6C8BCF'
+        }, {
+            num: 170,
+            ang: 60,
+            color: '#EF605E'
+        }]
+        var start = end = sum = 0;
+        var deg = Math.PI / 180;
+        arr.map(function(v, i) {
+            sum += v.ang;
+        })
+        arr.map(function(v, i) {
+
+            ctx.beginPath();
+            end = start + v.ang / sum * 360;
+            ctx.arc(0, 0, v.num, start * deg, end * deg);
+            ctx.fillStyle = v.color;
+            ctx.lineTo(0, 0);
+            ctx.fill();
+            ctx.closePath()
+            var c_deg = start + v.ang / sum * 180;
+            var x = Math.cos(c_deg * deg) * (v.num + 50);
+            var y = Math.sin(c_deg * deg) * (v.num + 50);
+            console.log(x, y)
+            ctx.beginPath();
+            ctx.arc(x, y, 20, 0, 2 * Math.PI);
+            ctx.fillStyle = v.color;
+            ctx.fill();
+            start = end;
+        })
+
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 140, 0 * Math.PI, Math.PI * 2);
+        ctx.lineTo(0, 0);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.beginPath()
+        ctx.arc(0, 0, 140, 0, 2 * Math.PI);
+        ctx.lineWidth = '20';
+        ctx.strokeStyle = `rgba(0,0,0,.2)`;
+
+        ctx.stroke()
+    </script>
+
+</body>
+
+</html>

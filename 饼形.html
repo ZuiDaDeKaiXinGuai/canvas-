@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600' style='border:1px solid #ccc'></canvas>
+    <script>
+        var ctx = mycanvas.getContext('2d');
+        var deg = Math.PI / 180;
+        var arr = [{
+            deg: 50,
+            color: 'red'
+        }, {
+            deg: 70,
+            color: 'green'
+        }, {
+            deg: 110,
+            color: 'blue'
+        }, {
+            deg: 130,
+            color: 'yellow'
+        }]
+        var end = start = 0;
+        arr.map(function(v, i) {
+            end = start + v.deg;
+            ctx.beginPath();
+            ctx.arc(200, 200, 200, start * deg, end * deg);
+            ctx.lineTo(200, 200);
+
+            ctx.fillStyle = v.color;
+            ctx.fill();
+
+            var c_deg = start + v.deg / 2;
+            var x = Math.cos(c_deg * deg) * 150 + 200;
+            var y = Math.sin(c_deg * deg) * 150 + 200;
+            ctx.fillStyle = '#fff';
+            ctx.textBaseline = 'middle';
+            ctx.textAline = 'center';
+            ctx.fillText('1610', x, y);
+
+            start = end;
+            ctx.closePath();
+        })
+    </script>
+</body>
+
+</html>

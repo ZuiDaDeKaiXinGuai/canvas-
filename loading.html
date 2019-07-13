@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id='mycanvas' width='600' height='600' style='border:1px solid #ccc'></canvas>
+</body>
+<script>
+    var ctx = mycanvas.getContext('2d');
+    console.log(ctx)
+
+    var init = 0;
+    var deg = Math.PI / 180;
+    draw();
+
+    function draw() {
+        init++;
+        if (init <= 360) {
+            requestAnimationFrame(draw)
+        }
+        ctx.clearRect(0, 0, 600, 600)
+
+        ctx.beginPath();
+        ctx.arc(300, 300, 200, 0, init * deg);
+        ctx.lineWidth = '20';
+        ctx.strokeStyle = 'pink';
+        ctx.stroke();
+        ctx.closePath();
+        var text = Math.round(init / 360 * 100);
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.font = '30px normal';
+        ctx.textAlign = 'center';
+        ctx.xtBaseline = 'middle';
+        ctx.strokeStyle = '#000';
+        ctx.strokeText(text + '%', 300, 300);
+        ctx.closePath();
+    }
+</script>
+
+</html>
